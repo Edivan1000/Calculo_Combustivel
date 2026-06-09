@@ -15,6 +15,8 @@ JSON.parse(localStorage.getItem("abastecimentos")) || [];
 
 let diasCunhada =
 Number(localStorage.getItem("diasCunhada")) || 0;
+let valorPagoCunhada =
+Number(localStorage.getItem("valorPagoCunhada")) || 0;
 let kmPercorridos =
 Number(localStorage.getItem("kmPercorridos")) || 0;
 
@@ -80,9 +82,17 @@ function salvarDiasCunhada(){
     diasCunhada =
     Number(document.getElementById("diasCunhada").value);
 
+    valorPagoCunhada =
+    Number(document.getElementById("valorPagoCunhada").value) || 0;
+
     localStorage.setItem(
         "diasCunhada",
         diasCunhada
+    );
+
+    localStorage.setItem(
+        "valorPagoCunhada",
+        valorPagoCunhada
     );
 
     atualizarTela();
@@ -152,6 +162,9 @@ autonomia - kmPercorridos;
     const valorReceber =
     custoCunhada * (PARTICIPACAO_CUNHADA / 100);
 
+    const saldoCunhada =
+    valorReceber - valorPagoCunhada;
+
     document.getElementById("totalAbastecido")
         .innerText =
         "R$ " + totalAbastecido.toFixed(2);
@@ -167,6 +180,16 @@ autonomia - kmPercorridos;
     document.getElementById("valorReceber")
         .innerText =
         "R$ " + valorReceber.toFixed(2);
+
+    document.getElementById("saldoCunhada")
+    .innerText =
+    "R$ " + saldoCunhada.toFixed(2);
+
+document.getElementById("statusCunhada")
+    .innerText =
+    saldoCunhada <= 0
+        ? "✅ Contas quitadas"
+        : "⚠️ Em aberto";
 
     document.getElementById("ultimoAbastecimento")
 .innerText =
@@ -255,6 +278,9 @@ DISTANCIA_DIA;
 
 document.getElementById("participacao").value =
 PARTICIPACAO_CUNHADA;
+
+document.getElementById("valorPagoCunhada").value =
+valorPagoCunhada;
 
 function registrarViagem(){
 
